@@ -16,6 +16,14 @@
 使用 [vue2](https://github.com/vuejs/vue) 和 [element-ui](https://github.com/ElemeFE/element) 实现
 可通过配置json格式数据生成form表单和table表格
 
+#### 安装
+
+##### npm 安装
+
+```
+npm i change-uid -S
+```
+
 #### 完整引入
 
 在 main.js 中写入以下内容：
@@ -23,8 +31,15 @@
 ```
 import Vue from 'vue';
 import App from './App.vue';
-import ChangeUI from 'change-uid';
 
+// 前提是已经全局注册或按需注册了element-ui，以及导入了element-ui的样式
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
+// 导入change-uid及样式，并注册
+import ChangeUI from 'change-uid';
+import 'change-uid/lib/change-uid.css';
 Vue.use(ChangeUI);
 
 new Vue({
