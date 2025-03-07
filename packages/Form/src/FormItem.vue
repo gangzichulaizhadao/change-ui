@@ -10,14 +10,13 @@
 
 <script>
 import { dateTypes } from './const'
+import MyInput from './components/Input.vue'
+import MySelect from './components/Select.vue'
+import MyDate from './components/Date.vue'
 
 export default {
   name: 'FormItem',
-  components: {
-    MyInput: () => import('./components/Input.vue'),
-    MySelect: () => import('./components/Select.vue'),
-    MyDate: () => import('./components/Date.vue')
-  },
+  components: { MyInput, MySelect, MyDate },
   props: {
     formItem: {
       type: Object,

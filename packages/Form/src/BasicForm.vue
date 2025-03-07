@@ -29,13 +29,12 @@
 
 <script>
 import { dateTypes } from './const'
+import FormItem from './FormItem.vue'
+import FormSlot from './FormSlot.vue'
 
 export default {
   name: 'BasicForm',
-  components: {
-    FormSlot: () => import('./FormSlot.vue'),
-    FormItem: () => import('./FormItem.vue')
-  },
+  components: { FormItem, FormSlot },
   props: {
     okText: {
       type: String,
