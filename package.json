@@ -1,10 +1,10 @@
 {
-  "name": "change-ui",
-  "version": "0.1.0",
+  "name": "change-uid",
+  "version": "1.0.0",
   "private": false,
   "description": "change-ui是基于vue2+element-ui二次封装的组件库",
-  "main": "lib/change-ui.umd.js",
-  "keyword": "vue vue2 element element-ui change-ui el-form el-table",
+  "main": "lib/change-uid.umd.js",
+  "keyword": "vue vue2 element element-ui change-uid el-form el-table",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -33,5 +33,25 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gangzichulaizhadao/change-uid.git"
+  },
+  "keywords": [
+    "change-uid",
+    "vue2",
+    "element-ui",
+    "vue"
+  ],
+  "author": "chengang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gangzichulaizhadao/change-uid/issues"
+  },
+  "homepage": "https://github.com/gangzichulaizhadao/change-uid#readme"
 }

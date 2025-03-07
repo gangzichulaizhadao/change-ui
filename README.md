@@ -1,5 +1,5 @@
 <p align="center">
-    change-ui
+    change-uid
 </p>
 <p align="center">
   <a href="https://github.com/vuejs/vue">
@@ -23,7 +23,7 @@
 ```
 import Vue from 'vue';
 import App from './App.vue';
-import ChangeUI from 'change-ui';
+import ChangeUI from 'change-uid';
 
 Vue.use(ChangeUI);
 
@@ -35,7 +35,7 @@ new Vue({
 #### 按需引入
 
 ```
-import { BasicForm, BasicPagination, BasicTable } from 'change-ui'
+import { BasicForm, BasicPagination, BasicTable } from 'change-uid'
 
 export default {
 	components: {
