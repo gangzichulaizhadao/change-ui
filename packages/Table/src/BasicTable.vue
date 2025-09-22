@@ -66,7 +66,7 @@ export default {
     }
   },
   mounted() {
-    this.initHeight()
+    this.autoHeight && this.initHeight()
   },
   methods: {
     // 初始化高度
