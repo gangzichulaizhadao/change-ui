@@ -1,7 +1,7 @@
 <template>
   <el-form ref="formRef" :model="formData" :rules="rules" v-bind="$attrs" v-on="$listeners">
     <el-row :gutter="20" type="flex">
-      <template v-for="(item, index) in formList">
+      <template v-for="(item, index) in baseFormList">
         <FormSlot v-if="item.slot" :key="index" :form-item="item">
           <slot :name="item.slot" />
         </FormSlot>
@@ -21,6 +21,10 @@
           resetText
         }}</el-button>
         <slot name="afterBtn"></slot>
+        <span v-if="expandOrCollapse" class="fold-btn" @click="expandOrCollapseFn">
+          <i :class="`el-icon-arrow-${this.isAllFold ? 'down' : 'up'}`" />
+          <el-button type="text">{{ this.isAllFold ? '展开' : '收起'}}</el-button>
+        </span>
       </el-col>
       <slot name="button"></slot>
     </el-row>
@@ -44,6 +48,7 @@ export default {
       type: String,
       default: '重置'
     },
+    // 插槽表单的数据
     slotParams: {
       type: Object,
       default: () => ({})
@@ -51,6 +56,16 @@ export default {
     formList: {
       type: Array,
       default: () => []
+    },
+    // 展开/收起
+    expandOrCollapse: {
+      type: Boolean,
+      default: false
+    },
+    // 展开/收起默认显示的个数
+    foldNum: {
+      type: Number,
+      default: 8
     }
   },
   watch: {
@@ -62,14 +77,22 @@ export default {
       immediate: true
     }
   },
+  computed: {
+    baseFormList() {
+      return this.expandOrCollapse ? this.handleFormList.filter(item => !item.fold) : this.formList
+    }
+  },
   data() {
     return {
+      isAllFold: true,
+      handleFormList: [], // 处理后的表单列表
       formData: {},
       rules: {}
     }
   },
   created() {
     this.initRules()
+    this.expandOrCollapse && this.handleList()
   },
   methods: {
     // 初始化校验规则
@@ -94,6 +117,16 @@ export default {
           this.rules[prop] = [{ required: true, message, trigger }]
         }
       })
+    },
+    // 处理表单列表
+    handleList() {
+      this.handleFormList = JSON.parse(JSON.stringify(this.formList))
+      this.handleFormList.forEach((item, i) => (this.$set(item, 'fold', i + 1 > this.foldNum)))
+    },
+    // 展开或折叠表单
+    expandOrCollapseFn() {
+      this.isAllFold = this.handleFormList.every(item => !item.fold)
+      this.handleFormList.forEach((item, i) => (item.fold = this.isAllFold ? i + 1 > this.foldNum : false))
     },
     // 校验整个表单
     validate() {
@@ -129,5 +162,17 @@ export default {
 }
 .form-btn {
   margin-left: 20px;
+}
+.fold-btn {
+  float: right;
+  cursor: pointer;
+  margin-right: 6px;
+}
+.fold-btn i {
+  color: #409eff;
+  font-size: 14px;
+}
+.fold-btn .el-button {
+  font-size: 14px;
 }
 </style>
