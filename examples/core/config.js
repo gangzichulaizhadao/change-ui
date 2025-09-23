@@ -47,6 +47,7 @@ export const formList = [
     listeners: {
       blur: e => {
         console.log(e, 'blur', _this)
+        _this.inputBlur()
       },
       clear: () => {
         console.log('clear')
@@ -109,6 +110,48 @@ export const formList = [
     }
   },
   {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'a',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'b',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'c',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'd',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'e',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'f',
+    }
+  },
+  {
     slot: 'a',
     // colAttrs: {
     //   span: 6
@@ -121,6 +164,34 @@ export const formList = [
       //   { required: true, message: '请输入地区', trigger: ['change', 'blur'] },
       //   { validator: validatePass, trigger: 'blur' }
       // ]
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'g',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'h',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'i',
+    }
+  },
+  {
+    type: 'input',
+    formItemAttrs: {
+      label: '名称',
+      prop: 'j',
     }
   }
 ]

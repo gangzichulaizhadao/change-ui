@@ -40,14 +40,24 @@ export default {
     receiveThis(this)
   },
   methods: {
+    inputBlur() {
+      console.log('blur', this.params.address)
+    },
+    getParams() {
+      return {
+        ...this.$refs.FormRef.getFormData(),
+        pageNum: this.pagination.current,
+        pageSize: this.pagination.size
+      }
+    },
     async handleSave() {
       const resp = await this.$refs.FormRef.validate()
-      console.log('🚀 ~ handleSave ~ resp:', resp, this.$refs.FormRef.getFormData())
+      console.log('🚀 ~ handleSave ~ resp:', resp, this.getParams())
     },
     reset() {
       this.$refs.FormRef.resetFields()
       this.params.address = ''
-      console.log(this.$refs.FormRef.getFormData())
+      console.log(this.getParams())
     }
   }
 }
