@@ -1,11 +1,20 @@
 <template>
-  <div ref="basicTableRef" class="basicTable">
+  <div ref="basicTableRef" :class="{'basicTable': autoHeight}">
+    <!-- 可选列功能 -->
+    <el-popover v-if="isCheckedColumns" placement="bottom" trigger="click" width="150">
+      <el-checkbox-group v-model="checkedColumns">
+        <el-checkbox v-for="column in baseColumns" :key="column.code" :label="column.code">{{ column.label }}</el-checkbox>
+      </el-checkbox-group>
+      <i class="el-icon-s-tools" slot="reference"></i>
+    </el-popover>
+    <!-- 列表 -->
     <el-table v-if="showTable" ref="tableRef" v-bind="tableAttrs" v-on="$listeners">
       <template v-for="(column, i) in renderColumns">
         <slot v-if="column.slot" :name="column.slot"></slot>
-        <el-table-column v-else :key="column.prop || i" v-bind="columnAttrs(column)" />
+        <el-table-column v-else :key="column.code || column.prop || i" v-bind="columnAttrs(column)" />
       </template>
     </el-table>
+    <!-- 分页 -->
     <BasicPagination v-if="showPagination" v-bind="pagination" v-on="pagination.events" />
   </div>
 </template>
@@ -23,19 +32,31 @@ export default {
       required: true,
       default: () => []
     },
-    // 是否自动撑开, false 时需要设置高度height属性
+    // 是否自动撑开
     autoHeight: {
       type: Boolean,
-      default: true
+      default: false
     },
     pagination: {
       type: Object,
       default: () => {}
+    },
+    // 是否开启可选列功能
+    isCheckedColumns: {
+      type: Boolean,
+      default: false
+    },
+    // 初始显示列数
+    defaultColumnsNum: {
+      type: Number,
+      default: 6
     }
   },
   data() {
     return {
-      THeight: 0 // table 高度
+      THeight: 0, // table 高度
+      baseColumns: [],
+      checkedColumns: [], // 选中列
     }
   },
   computed: {
@@ -56,19 +77,55 @@ export default {
     showPagination() {
       return this.pagination && this.pagination.total >= 0
     },
-    renderColumns() {
-      return this.columns.map(column => {
+    // 处理columns
+    handleColumns() {
+      const columns = this.isCheckedColumns ? this.baseColumns : this.columns
+      return columns.map(column => {
         if (column.options) {
           column.formatter = this.formatterFn(column.options)
         }
         return column
       })
+    },
+    // 渲染列
+    renderColumns() {
+      const filterColumns = this.handleColumns.filter(column => this.checkedColumns.includes(column.code))
+      return this.isCheckedColumns ? filterColumns : this.handleColumns
     }
+  },
+  created() {
+    this.isCheckedColumns && this.initCheckedColumns()
   },
   mounted() {
     this.autoHeight && this.initHeight()
   },
   methods: {
+    // 初始化选中列
+    initCheckedColumns() {
+      this.baseColumns = JSON.parse(JSON.stringify(this.columns))
+      this.baseColumns.forEach((item, i) => {
+        item.code = item.prop ? item.prop : ''
+        // 处理selection
+        if (item.type === 'selection') {
+          item.label = '全选/反选'
+          item.code = 'selection'
+        }
+        // 处理index
+        if (item.type === 'index') {
+          item.code = 'index'
+        }
+        // 处理插槽
+        if (item.slot) {
+          item.code = item.slot
+        }
+        // 默认显示操作列
+        if (item.slot === 'action') {
+          this.checkedColumns.push(item.code)
+        }
+
+        i + 1 <= this.defaultColumnsNum && (this.checkedColumns.push(item.code))
+      })
+    },
     // 初始化高度
     initHeight() {
       const basicTableRef = this.resetHeight()
@@ -78,7 +135,8 @@ export default {
     resetHeight() {
       const dom = this.$refs.basicTableRef
       const pageHeight = this.showPagination ? 50 : 0
-      this.THeight = dom.clientHeight - pageHeight
+      const setIconHeight = this.isCheckedColumns ? 5 : 0
+      this.THeight = dom.clientHeight - pageHeight - setIconHeight
       return dom
     },
     columnAttrs(column) {
@@ -100,10 +158,20 @@ export default {
 </script>
 
 <style scoped>
+/* flex布局，basicTable占用除表单外的所有剩余高度 */
 .basicTable {
   flex: 1;
+  overflow: hidden;
 }
 .el-table {
   margin-bottom: 5px;
+}
+.el-checkbox {
+  display: block;
+}
+.el-icon-s-tools {
+  float: right;
+  margin-right: 5px;
+  cursor: pointer;
 }
 </style>

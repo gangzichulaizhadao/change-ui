@@ -13,7 +13,10 @@ import {
   Form,
   FormItem,
   Row,
-  Col
+  Col,
+  CheckboxGroup,
+  Checkbox,
+  Popover
 } from 'element-ui'
 
 Vue.use(Button)
@@ -29,3 +32,6 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(CheckboxGroup)
+Vue.use(Checkbox)
+Vue.use(Popover)

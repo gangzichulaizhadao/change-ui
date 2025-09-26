@@ -5,6 +5,7 @@
       :formList="formList"
       :slotParams="params"
       label-width="80px"
+      expandOrCollapse
       @ok="handleSave"
       @reset="reset"
     >
@@ -16,7 +17,14 @@
       </template>
     </BasicForm>
     <!-- :autoHeight="false"  height="1000" -->
-    <BasicTable :data="tableData" :columns="tableColumns" :pagination="pagination"></BasicTable>
+    <BasicTable :data="tableData" :columns="tableColumns" autoHeight isCheckedColumns :pagination="pagination">
+      <el-table-column slot="chacao" label="插槽">插槽</el-table-column>
+      <el-table-column slot="action" align="center" width="180" label="操作">
+        <template slot-scope="{ row }">
+          <el-button type="text" @click="handleEdit(row)">编辑</el-button>
+        </template>
+      </el-table-column>
+    </BasicTable>
   </div>
 </template>
 
@@ -40,6 +48,9 @@ export default {
     receiveThis(this)
   },
   methods: {
+    handleEdit(row) {
+      console.log(row)
+    },
     inputBlur() {
       console.log('blur', this.params.address)
     },

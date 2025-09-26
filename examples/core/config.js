@@ -206,6 +206,14 @@ export const tableData = (function () {
     data.push({
       date: '2016-05-02',
       name: '王小虎',
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd',
+      e: 'e',
+      f: 'f',
+      g: 'g',
+      h: 'h',
       sex: random()
     })
   }
@@ -213,6 +221,15 @@ export const tableData = (function () {
 })()
 
 export const tableColumns = [
+  {
+    type: 'selection',
+    width: 55,
+  },
+  {
+    type: 'index',
+    label: '序号',
+    width: 55
+  },
   {
     label: '日期',
     prop: 'date',
@@ -223,6 +240,42 @@ export const tableColumns = [
   {
     label: '名称',
     prop: 'name'
+  },
+  {
+    label: 'a',
+    prop: 'a'
+  },
+  {
+    label: 'b',
+    prop: 'b'
+  },
+  {
+    label: 'c',
+    prop: 'c'
+  },
+  {
+    label: 'd',
+    prop: 'd'
+  },
+  {
+    label: 'e',
+    prop: 'e'
+  },
+  {
+    label: '插槽',
+    slot: 'chacao'
+  },
+  {
+    label: 'f',
+    prop: 'f'
+  },
+  {
+    label: 'g',
+    prop: 'g'
+  },
+  {
+    label: 'h',
+    prop: 'h'
   },
   {
     label: '性别',
@@ -238,6 +291,10 @@ export const tableColumns = [
         value: 0
       }
     ]
+  },
+  {
+    label: '操作',
+    slot: 'action'
   }
 ]
 

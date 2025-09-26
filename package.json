@@ -1,6 +1,6 @@
 {
   "name": "change-uid",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": false,
   "description": "change-ui是基于vue2+element-ui二次封装的组件库",
   "main": "lib/change-uid.umd.js",
