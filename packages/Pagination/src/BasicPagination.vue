@@ -61,6 +61,9 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
+      if (parseInt(this.total/val) < this.currentPage) {
+        return
+      }
       this.$emit('pagination', { current: this.currentPage, size: val })
     },
     handleCurrentChange(val) {

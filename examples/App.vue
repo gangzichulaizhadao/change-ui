@@ -16,7 +16,6 @@
         <el-button>111</el-button>
       </template>
     </BasicForm>
-    <!-- :autoHeight="false"  height="1000" -->
     <BasicTable :data="tableData" :columns="tableColumns" autoHeight isCheckedColumns :pagination="pagination">
       <el-table-column slot="chacao" label="插槽">插槽</el-table-column>
       <el-table-column slot="action" align="center" width="180" label="操作">
