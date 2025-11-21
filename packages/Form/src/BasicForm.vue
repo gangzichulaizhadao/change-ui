@@ -108,7 +108,8 @@ export default {
         } = item
         // 初始化字段
         if (type) {
-          this.$set(this.formData, prop, '')
+          const val = dateTypes.includes(type) ? null : ''
+          this.$set(this.formData, prop, val)
         }
         // 初始化校验规则
         if (required) {
@@ -144,10 +145,9 @@ export default {
     // 重置表单
     resetFields() {
       this.$refs.formRef.resetFields()
-      // 这里需要处理时间表单的重置
-      this.formList
-        .map(item => (dateTypes.includes(item.type) ? item.formItemAttrs.prop : false))
-        .forEach(item => item && (this.formData[item] = null))
+      this.formList.forEach(item => {
+        this.formData[item.formItemAttrs.prop] = dateTypes.includes(item.type) ? null : ''
+      })
     },
     // 获取表单数据
     getFormData() {
