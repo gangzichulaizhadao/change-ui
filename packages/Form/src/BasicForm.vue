@@ -35,6 +35,7 @@
 import { dateTypes } from './const'
 import FormItem from './FormItem.vue'
 import FormSlot from './FormSlot.vue'
+import { cloneDeep } from 'lodash-es'
 
 export default {
   name: 'BasicForm',
@@ -120,7 +121,7 @@ export default {
     },
     // 处理表单列表
     handleList() {
-      this.handleFormList = JSON.parse(JSON.stringify(this.formList))
+      this.handleFormList = cloneDeep(this.formList)
       this.handleFormList.forEach((item, i) => (this.$set(item, 'fold', i + 1 > this.foldNum)))
     },
     // 展开或折叠表单
