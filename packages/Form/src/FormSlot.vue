@@ -1,5 +1,5 @@
 <template>
-  <el-col v-bind="colAttrs">
+  <el-col v-if="$slots.default" v-bind="colAttrs">
     <el-form-item v-bind="formItemAttrs">
       <slot />
     </el-form-item>
