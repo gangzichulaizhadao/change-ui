@@ -18,6 +18,15 @@
     </BasicForm>
     <BasicTable :data="tableData" :columns="tableColumns" autoHeight isCheckedColumns :pagination="pagination">
       <el-table-column slot="chacao" label="插槽">插槽</el-table-column>
+      <el-table-column slot="content" label="内容" width="250">
+        <template slot-scope="{ row }">
+          <ellipsis-overflow
+            :content="row.content"
+            :lines="3"
+            show-tooltip
+          />
+        </template>
+      </el-table-column>
       <el-table-column slot="action" align="center" width="180" label="操作">
         <template slot-scope="{ row }">
           <el-button type="text" @click="handleEdit(row)">编辑</el-button>

@@ -214,6 +214,7 @@ export const tableData = (function () {
       f: 'f',
       g: 'g',
       h: 'h',
+      content: '这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容',
       sex: random()
     })
   }
@@ -244,6 +245,10 @@ export const tableColumns = [
   {
     label: 'a',
     prop: 'a'
+  },
+  {
+    label: '内容',
+    slot: 'content'
   },
   {
     label: 'b',
