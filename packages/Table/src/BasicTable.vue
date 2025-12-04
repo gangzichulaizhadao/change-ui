@@ -22,6 +22,7 @@
 <script>
 import ElementResizeDetector from 'element-resize-detector'
 import BasicPagination from '../../Pagination'
+import { cloneDeep } from 'lodash-es'
 
 export default {
   name: 'BasicTable',
@@ -102,7 +103,8 @@ export default {
   methods: {
     // 初始化选中列
     initCheckedColumns() {
-      this.baseColumns = JSON.parse(JSON.stringify(this.columns))
+      // this.baseColumns = JSON.parse(JSON.stringify(this.columns))
+      this.baseColumns = cloneDeep(this.columns)
       this.baseColumns.forEach((item, i) => {
         item.code = item.prop ? item.prop : ''
         // 处理selection
