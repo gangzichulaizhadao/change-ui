@@ -84,7 +84,7 @@ export default {
     RowAttrs() {
       return {
         type: 'flex',
-        gutter: '20',
+        gutter: 20,
         ...this.rowAttrs
       }
     }
