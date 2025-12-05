@@ -13,7 +13,7 @@ export default {
   },
   render(h) {
     return (
-      <el-select {...{ attrs: this.$attrs }} {...{ on: this.$listeners }}>
+      <el-select {...{ attrs: { clearable: true, ...this.$attrs }, on: this.$listeners }}>
         {Object.keys(this.slots).map(key => (
           <template slot={key}>{this.slots[key](h)}</template>
         ))}

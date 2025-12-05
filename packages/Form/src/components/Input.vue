@@ -9,7 +9,7 @@ export default {
   },
   render(h) {
     return (
-      <el-input {...{ attrs: this.$attrs }} {...{ on: this.$listeners }}>
+      <el-input {...{ attrs: { clearable: true, ...this.$attrs }, on: this.$listeners }}>
         {Object.keys(this.slots).map(key => (
           <template slot={key}>{this.slots[key](h)}</template>
         ))}

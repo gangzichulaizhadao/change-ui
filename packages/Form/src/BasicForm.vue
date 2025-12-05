@@ -1,16 +1,11 @@
 <template>
   <el-form ref="formRef" :model="formData" :rules="rules" v-bind="$attrs" v-on="$listeners">
-    <el-row :gutter="20" type="flex">
+    <el-row v-bind="RowAttrs">
       <template v-for="(item, index) in baseFormList">
         <FormSlot v-if="item.slot" :key="index" :form-item="item">
           <slot :name="item.slot" />
         </FormSlot>
-        <FormItem
-          v-else
-          :key="index"
-          v-model="formData[item.formItemAttrs.prop]"
-          :form-item="item"
-        />
+        <FormItem v-else :key="index" v-model="formData[item.formItemAttrs.prop]" :form-item="item" />
       </template>
       <!-- 按钮 -->
       <el-col v-if="$listeners.ok || $listeners.reset" class="form-btn">
@@ -20,19 +15,19 @@
         <el-button v-if="$listeners.reset" icon="el-icon-refresh-right" @click="$emit('reset')">{{
           resetText
         }}</el-button>
-        <slot name="afterBtn"></slot>
+        <slot name="afterBtn" />
+        <!-- 展开/收起 -->
         <span v-if="expandOrCollapse" class="fold-btn" @click="expandOrCollapseFn">
-          <i :class="`el-icon-arrow-${this.isAllFold ? 'down' : 'up'}`" />
-          <el-button type="text">{{ this.isAllFold ? '展开' : '收起'}}</el-button>
+          <i :class="`el-icon-arrow-${isAllFold ? 'down' : 'up'}`" />
+          <el-button type="text">{{ isAllFold ? '展开' : '收起' }}</el-button>
         </span>
       </el-col>
-      <slot name="button"></slot>
+      <slot v-else name="customButton" />
     </el-row>
   </el-form>
 </template>
 
 <script>
-import { dateTypes } from './const'
 import FormItem from './FormItem.vue'
 import FormSlot from './FormSlot.vue'
 import { cloneDeep } from 'lodash-es'
@@ -47,7 +42,7 @@ export default {
     },
     resetText: {
       type: String,
-      default: '重置'
+      default: '清除'
     },
     // 插槽表单的数据
     slotParams: {
@@ -66,7 +61,11 @@ export default {
     // 展开/收起默认显示的个数
     foldNum: {
       type: Number,
-      default: 8
+      default: 12
+    },
+    rowAttrs: {
+      type: Object,
+      default: () => ({})
     }
   },
   watch: {
@@ -81,6 +80,13 @@ export default {
   computed: {
     baseFormList() {
       return this.expandOrCollapse ? this.handleFormList.filter(item => !item.fold) : this.formList
+    },
+    RowAttrs() {
+      return {
+        type: 'flex',
+        gutter: '20',
+        ...this.rowAttrs
+      }
     }
   },
   data() {
@@ -108,8 +114,7 @@ export default {
         } = item
         // 初始化字段
         if (type) {
-          const val = dateTypes.includes(type) ? null : ''
-          this.$set(this.formData, prop, val)
+          this.$set(this.formData, prop, '')
         }
         // 初始化校验规则
         if (required) {
@@ -123,7 +128,7 @@ export default {
     // 处理表单列表
     handleList() {
       this.handleFormList = cloneDeep(this.formList)
-      this.handleFormList.forEach((item, i) => (this.$set(item, 'fold', i + 1 > this.foldNum)))
+      this.handleFormList.forEach((item, i) => this.$set(item, 'fold', i + 1 > this.foldNum))
     },
     // 展开或折叠表单
     expandOrCollapseFn() {
@@ -146,12 +151,18 @@ export default {
     resetFields() {
       this.$refs.formRef.resetFields()
       this.formList.forEach(item => {
-        this.formData[item.formItemAttrs.prop] = dateTypes.includes(item.type) ? null : ''
+        if (item.type) this.formData[item.formItemAttrs.prop] = ''
       })
     },
     // 获取表单数据
     getFormData() {
-      return this.formData
+      return cloneDeep(this.formData)
+    },
+    // slotParams watch handler 执行可能在微任务队列中，在父组件对slotParams赋值后，
+    // 可能formData还未更新，所以需要等待下一轮微任务队列执行后获取表单数据
+    async getFormDataAsync() {
+      await this.$nextTick()
+      return cloneDeep(this.formData)
     }
   }
 }
@@ -163,6 +174,7 @@ export default {
 }
 .form-btn {
   margin-left: 20px;
+  margin-bottom: 18px;
 }
 .fold-btn {
   float: right;
