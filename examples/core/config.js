@@ -213,7 +213,7 @@ export const tableData = (function () {
       e: 'e',
       f: 'f',
       g: 'g',
-      h: 'h',
+      h: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
       content: '这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容',
       sex: random()
     })
@@ -280,7 +280,8 @@ export const tableColumns = [
   },
   {
     label: 'h',
-    prop: 'h'
+    prop: 'h',
+    showOverflowTooltip: true
   },
   {
     label: '性别',
